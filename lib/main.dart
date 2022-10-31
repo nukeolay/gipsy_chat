@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gipsy_chat/app.dart';
@@ -25,7 +26,7 @@ void main() async {
   final RoomsApi roomsApi = RoomsApiImpl(client);
   final RoomHistoryApi roomHistoryApi = RoomHistoryApiImpl(client);
   final ChatSockets chatSockets = ChatSocketsImpl();
-  
+
   final UserRepository userRepository = UserRepositoryImpl(
     localStorage: localStorage,
     chatSettingsApi: chatSettingsApi,
@@ -38,6 +39,11 @@ void main() async {
     chatSettingsApi: chatSettingsApi,
     chatSockets: chatSockets,
   );
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   runApp(GipsyChatApp(
     userRepository: userRepository,
